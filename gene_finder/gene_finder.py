@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 """
 Created on Sun Feb  2 11:24:42 2014
 
-@author: YOUR NAME HERE
+@author: Shane Kelly
 
 """
 
@@ -29,8 +29,14 @@ def get_complement(nucleotide):
     >>> get_complement('C')
     'G'
     """
-    # TODO: implement this
-    pass
+
+    if nucleotide == 'A':
+        return 'T'
+    elif nucleotide == 'T':
+        return 'A'
+    elif nucleotide == 'C':
+        return 'G'
+    return 'C'
 
 def get_reverse_complement(dna):
     """ Computes the reverse complementary sequence of DNA for the specfied DNA
@@ -44,7 +50,11 @@ def get_reverse_complement(dna):
     'TGAACGCGG'
     """
     # TODO: implement this
-    pass
+
+    reverseComplement = ''
+    for x in range(0,len(dna)):
+        reverseComplement = reverseComplement + get_complement(dna[len(dna)-x-1])
+    return reverseComplement
 
 def rest_of_ORF(dna):
     """ Takes a DNA sequence that is assumed to begin with a start codon and returns
@@ -59,7 +69,8 @@ def rest_of_ORF(dna):
     'ATGAGA'
     """
     # TODO: implement this
-    pass
+    for x in range(0, len(dna)/3):
+        if dna[x:x+3] == 'ATG' or 
 
 def find_all_ORFs_oneframe(dna):
     """ Finds all non-nested open reading frames in the given DNA sequence and returns
@@ -157,3 +168,5 @@ def gene_finder(dna, threshold):
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
+
+print get_reverse_complement('ATGCCCGCTTT')
