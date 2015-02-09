@@ -1,0 +1,24 @@
+Author - Shane Kelly
+Date - 2/6/15
+
+In the dna sequence that we were given from salmonella I found 5 interesting amino acid sequences. All 5 sequences of amino acids turned out to code for proteins that are found in salmonella, which is a good thing considering that the DNA came from salmonella. Finding 5 salmonella proteins not only validates that my code is most likely working, but also tells me a bit about what kind of proteins make up salmonella. It seems that most of the proteins that I found are secretion proteins and surface proteins, which could be pointing to the idea that salmonella requires many of these types of proteins in order to function. The proteins that I found are listed below by the description and ID provided by BLAST.
+
+Sequence 1-
+Description: type III secretion system protein SpaO [Salmonella enterica]
+Sequence ID: ref|WP_000058734.1
+
+Sequence 2-
+Description: type III secretion system protein SpaS [Salmonella enterica]
+Sequence ID: ref|WP_000097719.1
+
+Sequence 3-
+Description: surface presentation of antigens, partial [Salmonella enterica]
+Sequence ID: ref|WP_032488261.1
+
+Sequence 4-
+Description: antigen presentation protein SpaN [Salmonella enterica]
+Sequence ID: ref|WP_000503098.1
+
+Sequence 5-
+Description: type III secretion system protein [Salmonella enterica]
+Sequence ID: ref|WP_000526016.1
