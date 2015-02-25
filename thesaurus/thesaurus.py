@@ -3,12 +3,6 @@ import string
 import random
 import pickle
 
-file = open('moby_chapter1.txt','r')
-input_file = file.read()
-file.close()
-
-f = open('better_moby_dick.txt', 'w')
-
 def if_x_in_y(charList, word):
 	"""Take a list of characters and a word and returns true if any of the characters are in the word, false if not"""
 	for char in charList:
@@ -162,5 +156,10 @@ def improve_text(text):
 	#join the synonyms together back into the text
 	return ' '.join(improvedText)
 
-f.write(improve_text('vehicle or agent, it spontaneously sought escape from the scorching'))
-# f.write(improve_text(input_file))
+file = open('chapter1to32.txt','r')
+input_file = file.read()
+file.close()
+
+f = open('betterchapter1to32.txt', 'w')
+
+f.write(improve_text(input_file))
