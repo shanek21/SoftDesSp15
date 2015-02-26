@@ -156,16 +156,13 @@ def improve_text(text):
 	#join the synonyms together back into the text
 	return ' '.join(improvedText)
 
-file = open('chapter60to94.txt','r')
+#This is what is translated
+file = open('thesaurus_explaination.txt','r')
 input_file = file.read()
 file.close()
 
-<<<<<<< HEAD
+#This is the file that the translation is saved to
 f = open('coolStuff.txt', 'w')
 
-f.write(improve_text('"Test"'))
-=======
-f = open('betterchapter60to94.txt', 'w')
-
+#Execute the translation and write the new file
 f.write(improve_text(input_file))
->>>>>>> 937b860b5f1e61e3edd7cd5390d4e176987fdf2a
