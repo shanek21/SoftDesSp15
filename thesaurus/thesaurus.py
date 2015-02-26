@@ -156,10 +156,16 @@ def improve_text(text):
 	#join the synonyms together back into the text
 	return ' '.join(improvedText)
 
-file = open('chapter1to32.txt','r')
+file = open('chapter60to94.txt','r')
 input_file = file.read()
 file.close()
 
+<<<<<<< HEAD
 f = open('coolStuff.txt', 'w')
 
 f.write(improve_text('"Test"'))
+=======
+f = open('betterchapter60to94.txt', 'w')
+
+f.write(improve_text(input_file))
+>>>>>>> 937b860b5f1e61e3edd7cd5390d4e176987fdf2a
