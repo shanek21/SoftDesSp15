@@ -160,6 +160,6 @@ file = open('chapter1to32.txt','r')
 input_file = file.read()
 file.close()
 
-f = open('betterchapter1to32.txt', 'w')
+f = open('coolStuff.txt', 'w')
 
-f.write(improve_text(input_file))
+f.write(improve_text('"Test"'))
