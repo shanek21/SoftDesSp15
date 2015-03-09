@@ -13,8 +13,8 @@ while(True):
 	ret, frame = cap.read()
 	faces = face_cascade.detectMultiScale(frame, scaleFactor=1.2, minSize=(20,20))
 	for (x,y,w,h) in faces:
-		cv2.circle(frame, (int(x+w/2+w*.2), int(y+h/2+h*.)), 20, (0, 255, 30), -1)
-		cv2.circle(frame, (int(x+w/2-w*.2), int()), 20, (0, 255, 30), -1)
+		cv2.circle(frame, (int(x+w/2+w*.2), int(y+h/2+h*.2)), 20, (0, 255, 30), -1)
+		cv2.circle(frame, (int(x+w/2-w*.2), int(y+h/2+h*.2)), 20, (0, 255, 30), -1)
 		# frame[y:y+h,x:x+w,:] = cv2.dilate(frame[y:y+h,x:x+w,:], kernel)
 		# cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255))
 	# Display the resulting frame

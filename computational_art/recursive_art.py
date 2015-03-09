@@ -23,7 +23,7 @@ def build_random_function(min_depth, max_depth):
 def make_function(depth):
     if depth == 1:
         return random.choice(['x', 'y'])
-    modifiers = ['prod', 'avg', 'cos_pi', 'sin_pi', 'sqr', 'half']
+    modifiers = ['prod', 'avg', 'cos_pi', 'sin_pi', 'tan_pi', 'abs']
     modifier = random.choice(modifiers)
     if modifier == "prod":
         return ["prod", make_function(depth-1), make_function(depth-1)]
@@ -37,6 +37,10 @@ def make_function(depth):
         return ["cos_pi", make_function(depth-1)]
     elif modifier == "sin_pi":
         return ["sin_pi", make_function(depth-1)]
+    elif modifier == "tan_pi":
+        return ["tan_pi", make_function(depth-1)]
+    elif modifier == "abs":
+        return ["abs", make_function(depth-1)]
 
 def evaluate_random_function(f, x, y):
     """ Evaluate the random function f with inputs x,y
@@ -85,6 +89,10 @@ def evaluate_random_function(f, x, y):
             return math.cos(math.pi*evaluate_random_function(f[1], x, y))
         elif f[0] == 'sin_pi':
             return math.sin(math.pi*evaluate_random_function(f[1], x, y))
+        elif f[0] == 'tan_pi':
+            return math.tan(math.pi*evaluate_random_function(f[1], x, y))
+        elif f[0] == 'abs':
+            return abs(evaluate_random_function(f[1], x, y))
 
 def remap_interval(val, input_interval_start, input_interval_end, output_interval_start, output_interval_end):
     """ Given an input value in the interval [input_interval_start,
@@ -164,9 +172,9 @@ def generate_art(filename, x_size=350, y_size=350):
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
     # Functions for red, green, and blue channels - where the magic happens!
-    red_function = build_random_function(9, 10)
-    green_function = build_random_function(9, 10)
-    blue_function = build_random_function(9, 10)
+    red_function = build_random_function(7, 9)
+    green_function = build_random_function(7, 9)
+    blue_function = build_random_function(7, 9)
     print 'red function: ' + str(red_function)
     print 'green function: ' + str(green_function)
     print 'blue function: ' + str(blue_function)
@@ -190,7 +198,7 @@ if __name__ == '__main__':
     import doctest
     doctest.testmod()
 
-    z = 28
+    z = 49
     nameNum = range(z, z+5)
     str1 = 'art' + str(nameNum[0]) + '.png'
     str2 = 'art' + str(nameNum[1]) + '.png'
@@ -198,10 +206,8 @@ if __name__ == '__main__':
     str4 = 'art' + str(nameNum[3]) + '.png'
     str5 = 'art' + str(nameNum[4]) + '.png'
 
-    # generate_art(str1)
-    # generate_art(str2)
-    # generate_art(str3)
-    # generate_art(str4)
-    # generate_art(str5)
-
-    generate_art('test.png')
+    generate_art(str1, 1920, 1080)
+    # generate_art(str2, 1920, 1080)
+    # generate_art(str3, 1920, 1080)
+    # generate_art(str4, 1920, 1080)
+    # generate_art(str5, 1920, 1080)
