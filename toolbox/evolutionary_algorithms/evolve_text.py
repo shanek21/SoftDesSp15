@@ -31,6 +31,7 @@ VALID_CHARS = string.ascii_uppercase + " "
 # Control whether all Messages are printed as they are evaluated
 VERBOSE = True
 
+memory = dict()
 
 #-----------------------------------------------------------------------------
 # Message object to use in evolutionary algorithm
@@ -87,7 +88,6 @@ class Message(list):
         """Return Message as string (rather than actual list of characters)"""
         return "".join(self)
 
-
 #-----------------------------------------------------------------------------
 # Genetic operators
 #-----------------------------------------------------------------------------
@@ -106,6 +106,9 @@ def evaluate_text(message, goal_text, verbose=VERBOSE):
         print "{msg:60}\t[Distance: {dst}]".format(msg=message, dst=distance)
     return (distance, )     # Length 1 tuple, required by DEAP
 
+def mate_text(s1, s2):
+    news1, news2 = deap.tools.cxTwoPoint(s1, s2)
+    return [news1, news2]
 
 def mutate_text(message, prob_ins=0.05, prob_del=0.05, prob_sub=0.05):
     """
@@ -131,7 +134,6 @@ def mutate_text(message, prob_ins=0.05, prob_del=0.05, prob_sub=0.05):
 
     return (message, )   # Length 1 tuple, required by DEAP
 
-
 #-----------------------------------------------------------------------------
 # DEAP Toolbox and Algorithm setup
 #-----------------------------------------------------------------------------
@@ -156,9 +158,7 @@ def get_toolbox(text):
     # NOTE: You can also pass function arguments as you define aliases, e.g.
     #   toolbox.register("individual", Message, max_length=200)
     #   toolbox.register("mutate", mutate_text, prob_sub=0.18)
-
     return toolbox
-
 
 def evolve_string(text):
     """Use evolutionary algorithm (EA) to evolve 'text' string"""
@@ -187,32 +187,48 @@ def evolve_string(text):
                                    mutpb=0.2,   # Probability of mutation
                                    ngen=500,    # Num. of generations to run
                                    stats=stats)
-
     return pop, log
 
+#-----------------------------------------------------------------------------
+# Evaluating Fitness: Levenshtein Distance
+#-----------------------------------------------------------------------------
+
+def levenshtein_distance(s1,s2):
+    """ Computes the Levenshtein distance between two input strings """
+    if s1 in memory:
+        return memory[s1]
+    if len(s1) == 0:
+        return len(s2)
+    if len(s2) == 0:
+        return len(s1)
+    final = min([int(s1[0] != s2[0]) + levenshtein_distance(s1[1:],s2[1:]), 1+levenshtein_distance(s1[1:],s2), 1+levenshtein_distance(s1,s2[1:])])
+    memory[s1] = final
+    return final
 
 #-----------------------------------------------------------------------------
 # Run if called from the command line
 #-----------------------------------------------------------------------------
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    # Get goal message from command line (optional)
-    import sys
-    if len(sys.argv) == 1:
-        # Default goal of the evolutionary algorithm if not specified.
-        # Pretty much the opposite of http://xkcd.com/534
-        goal = "SKYNET IS NOW ONLINE"
-    else:
-        goal = " ".join(sys.argv[1:])
+#     # Get goal message from command line (optional)
+#     import sys
+#     if len(sys.argv) == 1:
+#         # Default goal of the evolutionary algorithm if not specified.
+#         # Pretty much the opposite of http://xkcd.com/534
+#         goal = "SKYNET IS NOW ONLINE"
+#     else:
+#         goal = " ".join(sys.argv[1:])
 
-    # Verify that specified goal contains only known valid characters
-    # (otherwise we'll never be able to evolve that string)
-    for char in goal:
-        if char not in VALID_CHARS:
-            msg = "Given text {goal!r} contains illegal character {char!r}.\n"
-            msg += "Valid set: {val!r}\n"
-            raise ValueError(msg.format(goal=goal, char=char, val=VALID_CHARS))
+#     # Verify that specified goal contains only known valid characters
+#     # (otherwise we'll never be able to evolve that string)
+#     for char in goal:
+#         if char not in VALID_CHARS:
+#             msg = "Given text {goal!r} contains illegal character {char!r}.\n"
+#             msg += "Valid set: {val!r}\n"
+#             raise ValueError(msg.format(goal=goal, char=char, val=VALID_CHARS))
 
-    # Run evolutionary algorithm
-    pop, log = evolve_string(goal)
+#     # Run evolutionary algorithm
+#     pop, log = evolve_string(goal)
+
+print mate_text('abcd', 'wxyz')
