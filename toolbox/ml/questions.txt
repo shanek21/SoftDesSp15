@@ -1,0 +1,11 @@
+What is the general trend in the curve?
+	As the percentage of data used for training increases, so does the accuracy of the model.
+
+Are there parts of the curve that appear to be noisier than others? Why?
+	It seems that the beginning of the curve is noisier than the rest. My guess is that this is due to the low amount of training that the model receives. This creates an almost random nature of whether or not the model is accurate or not.
+
+How many trials do you need to get a smooth curve?
+	A lot. I tried out 100 trials and got a pretty nice curve.
+
+Try different values for C. What happens?
+	The relationship between the two axis turns from linear to logarithmic. This new curve shows that you get less accuracy per % training as you increase % training. The graph begins to asymptote.
