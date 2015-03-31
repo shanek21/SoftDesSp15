@@ -20,6 +20,8 @@ def build_random_function(min_depth, max_depth):
     depth = random.choice(range(min_depth, max_depth))
     return make_function(depth)
 
+    #Nice. Your make_function is nice and simple, and nicely gets around the random depths between min and max depth.
+
 def make_function(depth):
     if depth == 1:
         return random.choice(['x', 'y'])
@@ -41,6 +43,8 @@ def make_function(depth):
         return ["tan_pi", make_function(depth-1)]
     elif modifier == "abs":
         return ["abs", make_function(depth-1)]
+
+    #You should add some doctests though. Even if it's random, you can check if it outputs the right depth and all
 
 def evaluate_random_function(f, x, y):
     """ Evaluate the random function f with inputs x,y
@@ -94,6 +98,9 @@ def evaluate_random_function(f, x, y):
         elif f[0] == 'abs':
             return abs(evaluate_random_function(f[1], x, y))
 
+        #YAY TESTS <3 Overall nice. The floats is kind of confusing/sketchy looking though. It might be cleaner to convert x and y
+        # to floats at the top of this function rather than in each seperate if statement. 
+
 def remap_interval(val, input_interval_start, input_interval_end, output_interval_start, output_interval_end):
     """ Given an input value in the interval [input_interval_start,
         input_interval_end], return an output value scaled to fall within
@@ -125,6 +132,10 @@ def remap_interval(val, input_interval_start, input_interval_end, output_interva
     fraction2 = fraction1 * diff2
 
     return fraction2 + output_interval_start
+
+    #This is a little confusing to someone who doens't know what you're doing. It can be a good idea to split things up
+    # between multiple lines, but I think you did that a little too much here - it might make more sense in two lines instead
+    # of five. Yay tests though!
 
 def color_map(val):
     """ Maps input value between -1 and 1 to an integer 0-255, suitable for
@@ -207,6 +218,11 @@ if __name__ == '__main__':
     str5 = 'art' + str(nameNum[4]) + '.png'
 
     generate_art(str1, 1920, 1080)
+
+    #Huh. Cool modifications to make the screen bigger. Cool art too. I get what you're doing here above with the file
+    # names, but perhaps explain it better, or wrap it in a main function. Overall, nice code, and good job implementing
+    # tests and taking it further. 
+
     # generate_art(str2, 1920, 1080)
     # generate_art(str3, 1920, 1080)
     # generate_art(str4, 1920, 1080)
