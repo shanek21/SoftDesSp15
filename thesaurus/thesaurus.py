@@ -3,6 +3,28 @@ import string
 import random
 import pickle
 
+"""
+Overall, it seems like you had some very useful insights about making runtime shorter with 
+caching/memoizing, and prioritizing searches. However, though this is good on a high level,
+
+I really suggest you work on splitting your functions a whole lot more, and thinking on making
+your code readable and intuitive, not just fast.
+
+I have some specific comments on some really repetitive chunks of code, and how you can reduce them down.
+I also have some comments on the many if statements you have, and a comment on how I would personally
+structure that differently.
+
+Basically, you're on the right track with code efficiency, but get thinking on readability,
+elegance, and structure! Which are just as important. 
+
++Functionality: 5/5
++Documentation: 4/5 (Comments aren't everything here, make the structure cleaner)
++Style: 4/5 (Split your functions more, aim for elegance and little repetition)
++CheckIn: yes
++Total: 4/5
+
+"""
+
 def if_x_in_y(charList, word):
 	"""Take a list of characters and a word and returns true if any of the characters are in the word, false if not"""
 	for char in charList:
@@ -25,7 +47,15 @@ def find_synonyms(word):
 			if word[-2] not in set(string.ascii_letters):
 				ending = word[-1]
 				word = word[:-1]
+
 	#navigate to the thesaurus page of the word and parse the html for the synonyms of the word
+	
+	#Oh dear. this part looks extremely grimy....check if there's any libraries that can deal with 
+	# some of this for you...I used one before that "prettified" an html file
+	# and only returned the text I needed, for example, and that was just one function call.
+	# Anyway, at least put this in in a seperate file and function that can parse an html file,
+	# and just call it here
+
 	url = 'http://www.thesaurus.com/browse/' + word + '?s=t'
 	retry = True
 	while retry:
@@ -56,6 +86,21 @@ def find_synonyms(word):
 		return [word + ending]
 	html = html.split('@')
 
+	"""
+	Holy crap, OK. I do like how you tried to comment this and make it somewhat readable. 
+
+	However, a bunch of if statements like this is not the best way to structure this. 
+
+	My suggestion would be to actually make each filtering process it's own seperate function. 
+
+	Then, create a list of these functions in the order
+	that you want(Yup, you can do that, lists can hold funcitons).
+
+	Finally, make another funciton "is_synonym_needed" that loops through the list, calls the funciton
+	on every loop, and breaks/returns false if the function returns false. If it makes it through them all,
+	it returns true.
+	
+	"""
 	#make sure all of the synonyms are more than white space
 	finalHtml = []
 	for item in html:
@@ -101,13 +146,19 @@ def find_synonyms(word):
 			synonyms.append(item + ending)
 		else:
 			synonyms.append(item + ending)
-	return synonyms
+	return 
+
+#Oh dear. Please split your functions. These functions are way too long. Good job on commenting, but
+# that isn't the only way of making code readable. Think about if there's a better way to structure
+# things in the first place, as I mentioned in my comment on the if statements above.
 
 def improve_text(text):
 	"""Takes in any size text and returns the text with each word processed through a thesaurus and translated"""
 	#define the list of words that should not be translated
 	skippedWords = ['i', 'a', 'the', 'it', 'he', 'she', 'you', 'are', 'is', 'in', 'for']
 	for x in xrange(len(skippedWords)):
+		#This is a giant repetive chunk of code here. Whenever you see repetition like this,
+		# a red flag should go off in your head on how you can make it just one or two lines. 
 		skippedWords.append(skippedWords[x]+',')
 		skippedWords.append(skippedWords[x]+':')
 		skippedWords.append(skippedWords[x]+';')
@@ -147,6 +198,14 @@ def improve_text(text):
 			knownSynonyms[word] = synonyms
 			synonymsFoundCount += 1
 		wordCount += 1
+
+		#Again, all these print statements are super repetitive. Consider something cleaner like:
+
+		# fields = ['Word Count', 'Line Number', 'Words skipped', 'Dict Uses', 'Syns Found']
+		# counts = [wordCount, lineCount, wordsSkippedCount, dictionaryUseCount, synonymsFoundCount]
+		# for field, count in zip(fields, counts):
+		# 	print field, ': ', wordCount, '\n'
+
 		print '   Word count: ', wordCount, '\n'
 		print '  Line number: ', lineCount, '\n'
 		print 'Words skipped: ', wordsSkippedCount, '\n'
